@@ -1,8 +1,10 @@
 package com.example.deletelist.data.repository
 
+import android.util.Log
 import com.example.deletelist.data.models.Person
 import com.example.deletelist.data.storages.StorageName
 import com.example.deletelist.domain.repository.Repository
+import com.example.deletelist.ui.MainActivity.Companion.TAG
 
 class RepositoryImpl(private val storageName: StorageName): Repository {
 

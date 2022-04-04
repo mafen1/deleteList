@@ -12,11 +12,14 @@ import com.example.deletelist.databinding.HolderItemBinding
 @SuppressLint("NotifyDataSetChanged")
 class PersonAdapter : ListAdapter<Person, PersonAdapter.ViewHolder>(ItemComparator()) {
     var callBack: ((position: Int)-> Unit)? = null
+    var callBackPositionUp: ((position: Int)-> Unit)? = null
+    var callBackPositionDown: ((position: Int)-> Unit)? = null
     var items = mutableListOf<Person>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
+//    ListAdapter<Person, PersonAdapter.ViewHolder>(ItemComparator())
     class ItemComparator : DiffUtil.ItemCallback<Person>(){
         override fun areItemsTheSame(oldItem: Person, newItem: Person): Boolean {
            return oldItem == newItem
@@ -38,6 +41,12 @@ class PersonAdapter : ListAdapter<Person, PersonAdapter.ViewHolder>(ItemComparat
 
             binding.imageDelete.setOnClickListener {
                 callBack?.invoke(absoluteAdapterPosition)
+            }
+            binding.imageView.setOnClickListener {
+                callBackPositionUp?.invoke(absoluteAdapterPosition)
+            }
+            binding.imageView2.setOnClickListener {
+                callBackPositionDown?.invoke(absoluteAdapterPosition)
             }
         }
     }

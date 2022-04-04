@@ -18,7 +18,10 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels{
         ViewModelFactory(PersonUseCase(repository))
     }
-    val TAG = "TAG"
+    companion object{
+        val TAG = "TAG"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -35,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.listPerson.observe(this){
             if (it != null){
                 personAdapter.submitList(it.toMutableList())
+                personAdapter.items = it
             }
         }
     }
@@ -43,9 +47,13 @@ class MainActivity : AppCompatActivity() {
         viewModel.getPerson()
 
         personAdapter.callBack = { position: Int ->
-
             viewModel.removePerson(position)
-
+        }
+        personAdapter.callBackPositionUp = {  position: Int ->
+            viewModel.moveItemUp(position)
+        }
+        personAdapter.callBackPositionDown = {  position: Int ->
+            viewModel.moveItemDowm(position)
         }
 
     }
